@@ -12,15 +12,15 @@ class CreateFinancialtransTable extends Migration
             $table->id();
             $table->string('tranid')->unique();
             $table->unsignedBigInteger('moduleid');
-            $table->string('transid');
+            // $table->string('transid');
             $table->string('admno');
             $table->string('amount');
             $table->string('crdr');
-            $table->unsignedBigInteger('brid');
             $table->string('tranDate');
             $table->string('acadYear');
             $table->unsignedBigInteger('entrymode');
             $table->string('voucherno');
+            $table->unsignedBigInteger('brid');
             $table->string('Type_of_concession')->nullable();
             $table->timestamps();
 

@@ -14,7 +14,7 @@ class CreateFeetypesTable extends Migration
             $table->string('f_name');
             $table->unsignedBigInteger('collection_id');
             $table->unsignedBigInteger('br_id');
-            $table->unsignedBigInteger('seq_id');
+            $table->string('seq_id');
             $table->string('fee_type_ledger');
             $table->unsignedBigInteger('fee_head_type');
             $table->timestamps();

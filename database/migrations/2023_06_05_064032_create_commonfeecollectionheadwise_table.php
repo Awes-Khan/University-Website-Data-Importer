@@ -13,13 +13,16 @@ class CreateCommonfeecollectionheadwiseTable extends Migration
             $table->unsignedBigInteger('moduleId');
             $table->unsignedBigInteger('receiptId');
             $table->unsignedBigInteger('headId');
+            // $table->unsignedBigInteger('headName');
             $table->string('headName');
             $table->unsignedBigInteger('brid');
             $table->string('amount');
             $table->timestamps();
 
             $table->foreign('moduleId')->references('id')->on('modules');
+            $table->foreign('receiptId')->references('id')->on('commonfeecollection');
             $table->foreign('headId')->references('id')->on('feetypes');
+            // $table->foreign('head_name')->references('f_name')->on('feetypes');
             $table->foreign('brid')->references('id')->on('branches');
         });
     }

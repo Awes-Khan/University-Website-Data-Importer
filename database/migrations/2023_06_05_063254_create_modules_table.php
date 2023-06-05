@@ -4,19 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFeecategoryTable extends Migration
+class CreateModulesTable extends Migration
 {
     public function up()
     {
-        Schema::create('feecategory', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('module');
+            $table->string('moduleid');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('feecategory');
+        Schema::dropIfExists('modules');
     }
 }
