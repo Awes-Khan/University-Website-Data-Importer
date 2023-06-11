@@ -1,3 +1,9 @@
+[![PHP](https://img.shields.io/badge/PHP-8.2.2-blue)](https://www.php.net/)
+
+[![Laravel](https://img.shields.io/badge/Laravel-10.1.13-red)](https://laravel.com/) 
+
+![License](https://img.shields.io/badge/License-MIT-blue)
+
 # University Data Importer
 
 ## Table of Contents
