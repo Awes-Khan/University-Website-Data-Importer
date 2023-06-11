@@ -10,23 +10,22 @@ class CreateFinancialtransTable extends Migration
     {
         Schema::create('financialtrans', function (Blueprint $table) {
             $table->id();
-            $table->string('tranid')->unique();
+            $table->unsignedBigInteger('tranid')->unique();
             $table->unsignedBigInteger('moduleid');
             // $table->string('transid');
             $table->string('admno');
-            $table->string('amount');
+            $table->float('amount',10,2);
             $table->string('crdr');
             $table->string('tranDate');
             $table->string('acadYear');
             $table->unsignedBigInteger('entrymode');
-            $table->string('voucherno');
+            $table->integer('voucherno');
             $table->unsignedBigInteger('brid');
-            $table->string('Type_of_concession')->nullable();
+            $table->integer('Type_of_concession')->nullable();
             $table->timestamps();
 
             $table->foreign('moduleid')->references('id')->on('modules');
             $table->foreign('brid')->references('id')->on('branches');
-            $table->foreign('entrymode')->references('id')->on('entrymode');
         });
     }
 

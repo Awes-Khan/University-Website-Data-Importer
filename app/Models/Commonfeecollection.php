@@ -8,13 +8,19 @@ class Commonfeecollection extends Model
 {
     protected $fillable = [
         'moduleId',
-        'receiptId',
-        'headId',
-        'headName',
+        'transId',
+        'admno',
+        'rollno',
         'brid',
         'amount',
+        'acadamicYear',
+        'financialYear',
+        'displayReceiptNo',
+        'entrymode',
+        'paid_date',
+        'inactive'
     ];
-
+    protected $table = 'commonfeecollection';
     // Relationships
     public function module()
     {

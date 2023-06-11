@@ -16,7 +16,7 @@ class CreateCommonfeecollectionheadwiseTable extends Migration
             // $table->unsignedBigInteger('headName');
             $table->string('headName');
             $table->unsignedBigInteger('brid');
-            $table->string('amount');
+            $table->float('amount',10,2);
             $table->timestamps();
 
             $table->foreign('moduleId')->references('id')->on('modules');

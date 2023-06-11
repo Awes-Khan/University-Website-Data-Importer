@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model
 {
     protected $fillable = [
-        'name',
+        'id','name',
     ];
+    protected $table = 'branches';
 
     // Relationships
     public function feecategories()

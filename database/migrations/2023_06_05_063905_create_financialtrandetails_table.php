@@ -19,8 +19,6 @@ class CreateFinancialtrandetailsTable extends Migration
             // $table->unsignedBigInteger('head_name');
             $table->string('head_name');
             $table->timestamps();
-
-            $table->foreign('financialTranId')->references('id')->on('financialtrans');
             $table->foreign('moduleId')->references('id')->on('modules');
             $table->foreign('headId')->references('id')->on('feetypes');
             $table->foreign('brid')->references('id')->on('branches');

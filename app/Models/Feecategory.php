@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Feecategory extends Model
 {
     protected $fillable = [
-        'name',
+        'id','name','brid'
     ];
+
+    protected $table = 'feecategory';
 
     // Relationships
     public function branches()

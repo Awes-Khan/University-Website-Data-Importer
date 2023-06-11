@@ -14,8 +14,16 @@ use App\Http\Controllers\ExcelImportController;
 |
 */
 
-Route::post('/excel-import', [ExcelImportController::class, 'import'])->name('excel.import');
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/excel-import', [ProcessDataController::class, 'upload'])->name('excel.import');
+Route::get('/process-data/{id}', [ProcessDataController::class, 'runSeeder'])->name('runSeeder');
+Route::get('/process-data', [ProcessDataController::class, 'processData'])->name('processData');
+
+Route::get('/import', function () {
+    return view('importer');
+})->name('import');
+
+

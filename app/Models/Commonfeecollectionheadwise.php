@@ -15,6 +15,7 @@ class Commonfeecollectionheadwise extends Model
         'amount',
     ];
 
+    protected $table='commonfeecollectionheadwise';
     // Relationships
     public function commonfeecollection()
     {

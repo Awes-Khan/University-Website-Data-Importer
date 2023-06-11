@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Feecollectiontype extends Model
 {
     protected $fillable = [
-        'name',
+        'collectionhead','collectiondesc','br_id',
     ];
 
+    protected $table = 'feecollectiontypes';
+    
     // Relationships
     public function branches()
     {

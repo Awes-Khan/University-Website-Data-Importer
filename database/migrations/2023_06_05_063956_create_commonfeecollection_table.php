@@ -15,18 +15,17 @@ class CreateCommonfeecollectionTable extends Migration
             $table->string('admno');
             $table->string('rollno');
             $table->unsignedBigInteger('brid');
-            $table->string('amount');
+            $table->float('amount',10,2);
             $table->string('acadamicYear');
             $table->string('financialYear');
-            $table->string('displayReceiptNo');
+            $table->string('displayReceiptNo')->nullable();
             $table->unsignedBigInteger('entrymode');
             $table->string('paid_date');
-            $table->string('inactive');
+            $table->string('inactive')->nullable();
             $table->timestamps();
 
             $table->foreign('moduleId')->references('id')->on('modules');
             $table->foreign('brid')->references('id')->on('branches');
-            $table->foreign('entrymode')->references('id')->on('entrymode');
         });
     }
 

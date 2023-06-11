@@ -7,24 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Financialtran extends Model
 {
     protected $fillable = [
-        'moduleId',
-        'transId',
+        'moduleid',
+        'tranid',
         'admno',
         'rollno',
         'amount',
-        'brId',
-        'acadamicYear',
-        'financialYear',
+        'crdr',
+        'tranDate',
+        'acadYear',
         'entrymode',
         'voucherno',
         'brid',
-        'type_of_concession',
+        'Type_of_concession',
     ];
 
     // Relationships
     public function module()
     {
-        return $this->belongsTo(Module::class, 'moduleId');
+        return $this->belongsTo(Module::class, 'moduleid');
     }
 
     public function entrymode()
@@ -34,6 +34,6 @@ class Financialtran extends Model
 
     public function financialtrandetails()
     {
-        return $this->hasMany(Financialtrandetail::class, 'financialTranId');
+        return $this->hasMany(Financialtrandetail::class, 'tranid');
     }
 }

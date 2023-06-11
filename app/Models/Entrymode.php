@@ -10,10 +10,12 @@ class Entrymode extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'entry_modename',
         'crdr',
         'entrymodeno',
     ];
+    protected $table = 'entrymode';
+
 
     // Relationships
     public function financialtrans()
