@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\Debugbar\Facade as Debugbar;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\BulkLedgerImport;
 use App\Imports\TemporaryTableImport;
@@ -128,17 +129,35 @@ class ExcelImportController extends Controller
     }
 
 
-
-
-    public function processData()
+    public function processData($id)
     {
-        TemporaryTable::chunk(1000, function ($rows) {
+
+        $cfc_id = DB::table('commonfeecollectionheadwise')->whereBetween('id', [(($id-1) * 10000)+1, $id * 10000])->orderByDesc('id')->first('id');
+        $cfc_id = ($cfc_id)? $cfc_id->id : (($id-1) * 10000);
+        $temp_id = DB::table('temporary_tables')->orderByDesc('id')->first('id')->id;
+        $total_chunks = intval($temp_id /10000) + 1;
+        $start_id = $cfc_id;
+        // if($cfc_id >= $temp_id){
+        //     return 'Dta Process into all Tables';
+        // }
+        if($id * 10000 < $cfc_id){ //skipping chunk of 10000
+            return redirect()->route('processData',['id'=>($id + 1)]);
+        }
+        // TemporaryTable::skip($start_id)->take(10000)->chunk(100, function ($rows) {
+        TemporaryTable::whereBetween('id', [$start_id + 1, $id * 10000])->chunk(1000, function ($rows) {
             foreach ($rows as $row) {
                 // Process each row
+                Debugbar::info($row->id);
+
+                echo '<script> console.log("'.$row->id.'"); </script>';
                 $this->processRow($row);
             }
         });
-
+        Debugbar::info('Total chunks completed : '.$id);
+        // dd('Chunk Done');
+        if($id<=$total_chunks){
+            return redirect()->route('processData',['id'=>($id + 1)]);
+        }
         return 'Dta Process into all Tables';
     }
 
@@ -222,6 +241,7 @@ class ExcelImportController extends Controller
                 }
     
                 $financialTransaction = Financialtran::create([
+
                     'tranid' => $r,
                     'moduleid' => $module_id,
                     'admno' => $row['admno_uniqueid'],
@@ -236,9 +256,10 @@ class ExcelImportController extends Controller
                 ]);
                 $financial_txn_id = $r;
             }
-    
+            // dd($row['id']);
             // Import Financial Transaction Details
-            $financialTransactionDetails = Financialtrandetail::create([
+            $financialTransactionDetails = Financialtrandetail::updateOrCreate([
+                'id' => $row['id'],
                 'financialTranId' => $financial_txn_id,
                 'moduleId' => $module_id,
                 'amount' => $row['paid_amount'],
@@ -280,7 +301,8 @@ class ExcelImportController extends Controller
             }
     
             // Import Common Fee Collection Headwise
-            CommonFeeCollectionHeadwise::create([
+            CommonFeeCollectionHeadwise::updateOrCreate([
+                'id' => $row['id'],
                 'moduleId' => $module_id,
                 'receiptId' => $reciept_id,
                 'headId' => $fee_type_id,
@@ -289,8 +311,7 @@ class ExcelImportController extends Controller
                 'amount' => $row['paid_amount'],
             ]);
             return ' Data Processed';
-        }
-    
+        }    
 
 
 

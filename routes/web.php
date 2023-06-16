@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/excel-import', [ProcessDataController::class, 'upload'])->name('excel.import');
-Route::get('/process-data/{id}', [ProcessDataController::class, 'runSeeder'])->name('runSeeder');
-Route::get('/process-data', [ProcessDataController::class, 'processData'])->name('processData');
+Route::post('/excel-import', [ExcelImportController::class, 'upload'])->name('excel.import');
+Route::get('/import-data/{id}', [ExcelImportController::class, 'runSeeder'])->name('runSeeder');
+Route::get('/process-data/{id}', [ExcelImportController::class, 'processData'])->name('processData');
 
 Route::get('/import', function () {
     return view('importer');

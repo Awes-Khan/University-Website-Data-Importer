@@ -127,17 +127,25 @@ class ProcessDataController extends Controller
     }
 
 
-
-
-    public function processData()
+    public function processData($id)
     {
-        TemporaryTable::chunk(1000, function ($rows) {
+
+        $cfc_id = DB::table('commonfeecollectionheadwise')->orderByDesc('id')->first();
+        $temp_id = DB::table('temporary_tables')->orderByDesc('id')->first();
+        $chunk_count = ($temp_id/10000);
+        $start_id = $cfc_id;
+        if($cfc_id == $temp_id){
+            return 'Dta Process into all Tables';
+        }
+        if($id * 10000 < $cfc_id){
+            return redirect()->route('processData',['id'=>($id + 1)]);
+        }
+        TemporaryTable::skip($start_id)->take(10000)->chunk(1000, function ($rows) {
             foreach ($rows as $row) {
                 // Process each row
                 $this->processRow($row);
             }
         });
-
         return 'Dta Process into all Tables';
     }
 
@@ -237,7 +245,8 @@ class ProcessDataController extends Controller
             }
     
             // Import Financial Transaction Details
-            $financialTransactionDetails = Financialtrandetail::create([
+            $financialTransactionDetails = Financialtrandetail::updateOrCreate([
+                'id' => $row['id'],
                 'financialTranId' => $financial_txn_id,
                 'moduleId' => $module_id,
                 'amount' => $row['paid_amount'],
@@ -279,7 +288,8 @@ class ProcessDataController extends Controller
             }
     
             // Import Common Fee Collection Headwise
-            CommonFeeCollectionHeadwise::create([
+            CommonFeeCollectionHeadwise::updateOrCreate([
+                'id' => $row['id'],
                 'moduleId' => $module_id,
                 'receiptId' => $reciept_id,
                 'headId' => $fee_type_id,
